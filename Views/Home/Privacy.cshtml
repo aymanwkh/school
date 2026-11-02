@@ -1,0 +1,338 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div id="app">
+    <v-container fluid>
+            
+        <v-toolbar title="Student Information Registration"> 
+            <template v-slot:append>
+          <v-btn icon="mdi-magnify" @@click="showDialog"></v-btn>
+          <v-icon-btn icon="mdi-dots-vertical" :active="menu">
+            <v-icon></v-icon>
+            <v-menu v-model="menu" activator="parent" location="bottom end" offset="4">
+          <v-list
+            bg-color="surface-light"
+            class="d-flex flex-column ga-1 pa-1"
+            density="compact"
+            rounded="lg"
+            variant="text"
+            slim
+          >
+            <v-list-item
+              append-icon="mdi-account-circle-outline"
+              rounded="lg"
+              title="Account"
+              link
+            ></v-list-item>
+
+            <v-list-item
+              prepend-icon="mdi-cog-outline"
+              rounded="lg"
+              title="Settings"
+              link
+            ></v-list-item>
+
+            <v-list-item
+              prepend-icon="mdi-logout-variant"
+              rounded="lg"
+              title="Logout"
+              link
+            ></v-list-item>
+          </v-list>
+        </v-menu>
+          </v-icon-btn>
+      </template>
+        </v-toolbar>
+  <v-card max-width="400" class="mx-auto" variant="flat">
+    <v-list lines="one" density="comfortable">
+      
+      <v-list-item class="border-b">
+        <!-- Label on the left -->
+        <v-list-item-title class="text-body-2 text-medium-emphasis">
+          Status
+        </v-list-item-title>
+
+        <!-- Value on the right using the append slot -->
+        <template #append>
+          <v-chip color="success" size="small" label>Active</v-chip>
+        </template>
+      </v-list-item>
+
+      <v-list-item class="border-b">
+        <v-list-item-title class="text-body-2 text-medium-emphasis">
+          Created By
+        </v-list-item-title>
+
+        <template #append>
+          <span class="text-body-2 text-high-emphasis font-weight-medium">
+            Alex Johnson
+          </span>
+        </template>
+      </v-list-item>
+
+    </v-list>
+  </v-card>
+  <v-card max-width="400" class="mx-auto pa-4" variant="outlined">
+    <!-- Outer container mapping to a Description List -->
+    <dl class="d-flex flex-column ga-3">
+      
+      <!-- Individual Row -->
+      <div class="d-flex justify-space-between align-baseline border-b pb-2">
+        <dt class="text-body-2 text-medium-emphasis">Status</dt>
+        <dd class="text-body-2 text-high-emphasis font-weight-medium">Active</dd>
+      </div>
+
+      <!-- Individual Row -->
+      <div class="d-flex justify-space-between align-baseline border-b pb-2">
+        <dt class="text-body-2 text-medium-emphasis">Created By</dt>
+        <dd class="text-body-2 text-high-emphasis font-weight-medium">Alex Johnson</dd>
+      </div>
+
+    </dl>
+  </v-card>
+<v-card max-width="400" class="mx-auto pt-3" variant="flat">
+    <v-col
+          cols="12"
+          md="4"
+          sm="6"
+        >
+          <v-text-field
+            label="Status"
+            model-value="Active"
+            variant="outlined"
+            readonly
+          ></v-text-field>
+        </v-col>
+    <v-col
+          cols="12"
+          md="4"
+          sm="6"
+        >
+          <v-text-field
+            label="Created By"
+            model-value="Alex Johnson"
+            variant="outlined"
+            readonly
+          ></v-text-field>
+        </v-col>
+        </v-card>
+            <v-card class="elevation-4 pa-6 rounded-lg">
+                @* <v-card-title class="text-h5 font-weight-bold mb-4 text-primary">
+                    Student Information Registration
+                </v-card-title> *@
+
+                <v-form ref="form" v-model="isFormValid" @@submit.prevent="submitForm">
+                    <v-row>
+                        <v-col cols="12" sm="6">
+                            <v-text-field v-model="student.id" label="Student ID" placeholder="e.g., STU-10023"
+                                          :rules="[rules.required]" prepend-inner-icon="mdi-id-card" required></v-text-field>
+                        </v-col>
+
+                        <!-- Full Name -->
+                        <v-col cols="12" sm="6">
+                            <v-text-field v-model="student.name" label="Full Name" placeholder="First Middle Last"
+                                          :rules="[rules.required]" prepend-inner-icon="mdi-account" required></v-text-field>
+                        </v-col>
+
+                        <!-- Birth Date -->
+                        <v-col cols="12" sm="6">
+                            <v-date-input label="Date input" v-model="student.birthDate" :rules="[rules.required]" required 
+                            input-format="yyyy-mm-dd" clearable placeholder=" "></v-date-input>
+                        </v-col>
+
+                        <!-- Birth Place -->
+                        <v-col cols="12" sm="6">
+                            <v-text-field v-model="student.birthPlace" label="Birth Place" placeholder="City, Country"
+                                          :rules="[rules.required]" prepend-inner-icon="mdi-map-marker" required></v-text-field>
+                        </v-col>
+
+                        <!-- Parent ID -->
+                        <v-col cols="12" sm="6">
+                            <v-text-field v-model="student.parentId" label="Parent/Guardian ID"
+                                          placeholder="e.g., PAR-5501" :rules="[rules.required]"
+                                          prepend-inner-icon="mdi-account-shield" required></v-text-field>
+                        </v-col>
+
+                        <!-- Mobile Number -->
+                        <v-col cols="12" sm="6">
+                            <v-text-field v-model="student.mobileNumber" label="Mobile Number"
+                                          placeholder="e.g., +123456789" :rules="[rules.required, rules.phone]"
+                                          prepend-inner-icon="mdi-phone" required></v-text-field>
+                        </v-col>
+
+                        <!-- Nationality -->
+                        <v-col cols="12" sm="6">
+                            <v-text-field v-model="student.nationality" label="Nationality" placeholder="e.g., Canadian"
+                                          :rules="[rules.required]" prepend-inner-icon="mdi-flag" required></v-text-field>
+                        </v-col>
+
+                        <!-- Class Number (Selection List) -->
+                        <v-col cols="12" sm="6">
+                            <v-select v-model="student.classNumber" :items="classOptions" label="Class Number"
+                                      :rules="[rules.required]" prepend-inner-icon="mdi-google-classroom" required></v-select>
+                        </v-col>
+
+                        <!-- Gender -->
+                        <v-col cols="12" sm="6">
+                            <v-radio-group v-model="student.gender" label="Gender" inline :rules="[rules.required]">
+                                <v-radio label="Male" value="Male" color="primary" />
+                                <v-radio label="Female" value="Female" color="primary" />
+                            </v-radio-group>
+                        </v-col>
+
+                        <!-- Order in the Family -->
+                        <v-col cols="12" sm="6">
+                            <v-text-field v-model.number="student.familyOrder" type="number" min="1"
+                                          label="Order in Family" placeholder="e.g., 1 for oldest"
+                                          :rules="[rules.required, rules.positiveNumber]"
+                                          prepend-inner-icon="mdi-human-male-female-child" required></v-text-field>
+                        </v-col>
+
+                        <!-- Address -->
+                        <v-col cols="12">
+                            <v-text-field v-model="student.address" label="Home Address"
+                                          placeholder="Street name, Building, Apartment No." :rules="[rules.required]"
+                                          prepend-inner-icon="mdi-home" required></v-text-field>
+                        </v-col>
+
+                        <!-- Health Status -->
+                        <v-col cols="12">
+                            <v-text-field v-model="student.healthStatus" label="Health Status / Medical Considerations"
+                                          placeholder="e.g., None, Asthma, Peanut Allergy"
+                                          prepend-inner-icon="mdi-heart-pulse"></v-text-field>
+                        </v-col>
+
+                        <!-- Notes -->
+                        <v-col cols="12">
+                            <v-textarea v-model="student.notes" label="Additional Notes"
+                                        placeholder="Enter any other relevant remarks here..."
+                                        prepend-inner-icon="mdi-note-text" rows="3" auto-grow></v-textarea>
+                        </v-col>
+                    </v-row>
+
+                    <!-- Form Actions -->
+                    <v-card-actions class="justify-end px-0 mt-4">
+                        <v-btn variant="text" color="error" class="me-2" @@click="resetForm">
+                            Reset
+                        </v-btn>
+                        <v-btn type="submit" color="primary" variant="elevated" :disabled="!isFormValid">
+                            Submit Student
+                        </v-btn>
+                    </v-card-actions>
+                </v-form>
+            </v-card>
+                <v-dialog v-model="dialog" max-width="400">
+      <v-card>
+        <v-card-text>
+          <!-- Input Field -->
+<form @@submit.prevent="submit">
+          <v-text-field
+            v-model="inputValue"
+            label="بحث بالرقم"
+            variant="filled"
+:append-icon="'mdi-text-search-variant'"
+          ></v-text-field>
+  </form>
+
+          <!-- Button Beneath It -->
+          <v-btn
+            color="primary"
+            block
+            class="mt-3"
+            @@click="handleSubmit"
+          >
+            بحث متقدم
+          </v-btn>
+        </v-card-text>
+
+      </v-card>
+    </v-dialog>
+
+    </v-container>
+</div>
+@section Scripts {
+
+    <script>
+        const { ref, reactive } = Vue
+        function setup() {
+            const menu = ref(false)
+            const form = ref(null)
+            const isFormValid = ref(false)
+
+            // Form Fields Structure
+            const student = reactive({
+                id: '',
+                name: '',
+                birthDate: '',
+                birthPlace: '',
+                parentId: '',
+                nationality: '',
+                address: '',
+                classNumber: null,
+                gender: null,
+                healthStatus: 'None',
+                notes: '',
+                mobileNumber: '',
+                familyOrder: null
+            })
+
+            // Options for Class selection list
+            const classOptions = ref([
+                'Class 101', 'Class 102', 'Class 103',
+                'Class 201', 'Class 202', 'Class 301'
+            ])
+
+            // Basic validation rules setup
+            const rules = {
+                required: v => !!v || 'This field is required.',
+                positiveNumber: v => (v && v > 0) || 'Value must be greater than 0.',
+                phone: v => {
+                    const pattern = /^\+?[0-9\s-]{7,15}$/
+                    return pattern.test(v) || 'Invalid phone number format.'
+                }
+            }
+
+            // Actions
+            const submitForm = async () => {
+                if (!form.value) return
+  
+                const { valid } = await form.value.validate()
+  
+                if (valid) {
+                    // Process form payload data safely
+                    console.log('Student Info Payload Submitted:', JSON.stringify(student, null, 2))
+                    alert('Student registration payload logged to console!')
+                }
+            }
+
+            const resetForm = () => {
+                if (form.value) {
+                    form.value.reset()
+                    // Reset default fallback options explicitly if needed
+                    student.healthStatus = 'None'
+                }
+            }
+            const dialog = ref(false)
+const inputValue = ref('')
+
+const handleSubmit = () => {
+  console.log('Submitted value:', inputValue.value)
+  dialog.value = false
+}
+function submit() {
+    console.log('submitted....')
+}
+            return {
+                form, isFormValid, student, classOptions,
+                resetForm, submitForm, rules, dialog, inputValue,
+                handleSubmit, submit, menu
+            }
+        }
+        // Form Ref and state
+    </script>
+}
+
+
+</script>
