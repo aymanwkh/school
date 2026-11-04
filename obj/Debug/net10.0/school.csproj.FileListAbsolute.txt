@@ -250,3 +250,4 @@
 /home/ayman/Projects/school/obj/Debug/net10.0/school.pdb
 /home/ayman/Projects/school/obj/Debug/net10.0/school.genruntimeconfig.cache
 /home/ayman/Projects/school/obj/Debug/net10.0/ref/school.dll
+/home/ayman/Projects/school/obj/Debug/net10.0/school.sourcelink.json
