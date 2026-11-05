@@ -1,0 +1,179 @@
+<div id="app">
+    <v-sheet border rounded>
+        <v-data-table :headers="headers" hide-default-footer 
+        :items="books" show-select v-model="selected" item-value="id" select-strategy="single">
+            <template v-slot:top>
+                <v-toolbar flat title="Books">
+<div class="d-flex ga-1 px-1">
+
+<v-icon-btn
+              icon="mdi-pencil"
+              size="24"
+              variant="outlined"
+              @@click="edit"
+              color="primary"
+              v-show="selected?.length > 0"
+            >
+              <v-icon size="16"></v-icon>
+            </v-icon-btn>
+<v-icon-btn
+              icon="mdi-delete"
+              size="24"
+              variant="outlined"
+              @@click="remove"
+              color="error"
+              v-show="selected?.length > 0"
+            >
+              <v-icon size="16"></v-icon>
+            </v-icon-btn>
+            <v-icon-btn
+              icon="mdi-plus"
+              size="24"
+              variant="outlined"
+              @@click="add"
+              color="success"
+            >
+              <v-icon size="16"></v-icon>
+            </v-icon-btn>
+
+</div>
+                    </v-toolbar>
+            </template>
+
+            <template v-slot:no-data>
+                <v-btn prepend-icon="mdi-backup-restore" rounded="lg" text="Reset data" variant="text" border
+                @@click="reset"></v-btn>
+            </template>
+        </v-data-table>
+    </v-sheet>
+
+    <v-dialog v-model="dialog" max-width="500">
+        <v-card :subtitle="`${isEditing ? 'Update' : 'Create'} your favorite book`"
+                :title="`${isEditing ? 'Edit' : 'Add'} a Book`">
+            <template v-slot:text>
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field v-model="formModel.title" label="Title"></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" md="6">
+                        <v-text-field v-model="formModel.author" label="Author"></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" md="6">
+                        <v-select v-model="formModel.genre" :items="['Fiction', 'Dystopian', 'Non-Fiction', 'Sci-Fi']"
+                                  label="Genre"></v-select>
+                    </v-col>
+
+                    <v-col cols="12" md="6">
+                        <v-number-input v-model="formModel.year" :max="currentYear" :min="1"
+                                        label="Year"></v-number-input>
+                    </v-col>
+
+                    <v-col cols="12" md="6">
+                        <v-number-input v-model="formModel.pages" :min="1" label="Pages"></v-number-input>
+                    </v-col>
+                </v-row>
+            </template>
+
+            <v-divider></v-divider>
+
+            <v-card-actions class="bg-surface-light">
+                <v-btn text="Cancel" variant="plain" @@click="dialog = false"></v-btn>
+
+                <v-spacer></v-spacer>
+
+                <v-btn text="Save" @@click="save"></v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+</div>
+@section Scripts {
+    <script>
+        const { onMounted, ref, shallowRef, toRef } = Vue
+        function setup () {
+
+            const currentYear = new Date().getFullYear()
+
+            function createNewRecord() {
+                return {
+                    title: '',
+                    author: '',
+                    genre: '',
+                    year: currentYear,
+                    pages: 1,
+                }
+            }
+
+            const books = ref([])
+            const formModel = ref(createNewRecord())
+            const dialog = shallowRef(false)
+            const isEditing = toRef(() => !!formModel.value.id)
+            const selected = ref([])
+            const headers = [
+                { title: 'Title', key: 'title', align: 'start' },
+                { title: 'Author', key: 'author' },
+                { title: 'Genre', key: 'genre' },
+                { title: 'Year', key: 'year', align: 'end' },
+                { title: 'Pages', key: 'pages', align: 'end' },
+            ]
+
+            onMounted(() => {
+                reset()
+            })
+
+            function add() {
+                formModel.value = createNewRecord()
+                dialog.value = true
+            }
+
+            function edit() {
+                const found = books.value.find(book => book.id === selected.value[0])
+
+                formModel.value = {
+                    id: found.id,
+                    title: found.title,
+                    author: found.author,
+                    genre: found.genre,
+                    year: found.year,
+                    pages: found.pages,
+                }
+
+                dialog.value = true
+            }
+
+            function remove(id) {
+                const index = books.value.findIndex(book => book.id === id)
+                books.value.splice(index, 1)
+            }
+
+            function save() {
+                if (isEditing.value) {
+                    const index = books.value.findIndex(book => book.id === formModel.value.id)
+                    books.value[index] = formModel.value
+                } else {
+                    formModel.value.id = books.value.length + 1
+                    books.value.push(formModel.value)
+                }
+
+                dialog.value = false
+            }
+
+            function reset() {
+                dialog.value = false
+                formModel.value = createNewRecord()
+                books.value = [
+                    { id: 1, title: 'To Kill a Mockingbird', author: 'Harper Lee', genre: 'Fiction', year: 1960, pages: 281 },
+                    { id: 2, title: '1984', author: 'George Orwell', genre: 'Dystopian', year: 1949, pages: 328 },
+                    { id: 3, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', genre: 'Fiction', year: 1925, pages: 180 },
+                    { id: 4, title: 'Sapiens', author: 'Yuval Noah Harari', genre: 'Non-Fiction', year: 2011, pages: 443 },
+                    { id: 5, title: 'Dune', author: 'Frank Herbert', genre: 'Sci-Fi', year: 1965, pages: 412 },
+                ]
+            }
+            return {
+                books, formModel, dialog, isEditing, headers, add, edit,
+                remove, save, reset, currentYear, selected
+            }
+        }  
+    </script>
+}
