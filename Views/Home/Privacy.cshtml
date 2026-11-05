@@ -45,7 +45,10 @@
           </v-icon-btn>
       </template>
         </v-toolbar>
-  <v-card max-width="400" class="mx-auto" variant="flat">
+        <v-row>
+          <v-col>
+
+  <v-card max-width="400" variant="flat">
     <v-list lines="one" density="comfortable">
       
       <v-list-item class="border-b">
@@ -74,155 +77,33 @@
 
     </v-list>
   </v-card>
-  <v-card max-width="400" class="mx-auto pa-4" variant="outlined">
-    <!-- Outer container mapping to a Description List -->
-    <dl class="d-flex flex-column ga-3">
-      
-      <!-- Individual Row -->
-      <div class="d-flex justify-space-between align-baseline border-b pb-2">
-        <dt class="text-body-2 text-medium-emphasis">Status</dt>
-        <dd class="text-body-2 text-high-emphasis font-weight-medium">Active</dd>
-      </div>
+          </v-col>
+          <v-col>
+            <v-navigation-drawer absolute permanent>
 
-      <!-- Individual Row -->
-      <div class="d-flex justify-space-between align-baseline border-b pb-2">
-        <dt class="text-body-2 text-medium-emphasis">Created By</dt>
-        <dd class="text-body-2 text-high-emphasis font-weight-medium">Alex Johnson</dd>
-      </div>
-
-    </dl>
-  </v-card>
-<v-card max-width="400" class="mx-auto pt-3" variant="flat">
-    <v-col
-          cols="12"
-          md="4"
-          sm="6"
+        <v-list
+          :lines="false"
+          density="compact"
+          nav
         >
-          <v-text-field
-            label="Status"
-            model-value="Active"
-            variant="outlined"
-            readonly
-          ></v-text-field>
-        </v-col>
-    <v-col
-          cols="12"
-          md="4"
-          sm="6"
-        >
-          <v-text-field
-            label="Created By"
-            model-value="Alex Johnson"
-            variant="outlined"
-            readonly
-          ></v-text-field>
-        </v-col>
-        </v-card>
-            <v-card class="elevation-4 pa-6 rounded-lg">
-                @* <v-card-title class="text-h5 font-weight-bold mb-4 text-primary">
-                    Student Information Registration
-                </v-card-title> *@
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            :value="item"
+            color="primary"
+          >
+            <template v-slot:prepend>
+              <v-icon :icon="item.icon"></v-icon>
+            </template>
 
-                <v-form ref="form" v-model="isFormValid" @@submit.prevent="submitForm">
-                    <v-row>
-                        <v-col cols="12" sm="6">
-                            <v-text-field v-model="student.id" label="Student ID" placeholder="e.g., STU-10023"
-                                          :rules="[rules.required]" prepend-inner-icon="mdi-id-card" required></v-text-field>
-                        </v-col>
+            <v-list-item-title v-text="item.text"></v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+          </v-col>
+        </v-row>
 
-                        <!-- Full Name -->
-                        <v-col cols="12" sm="6">
-                            <v-text-field v-model="student.name" label="Full Name" placeholder="First Middle Last"
-                                          :rules="[rules.required]" prepend-inner-icon="mdi-account" required></v-text-field>
-                        </v-col>
 
-                        <!-- Birth Date -->
-                        <v-col cols="12" sm="6">
-                            <v-date-input label="Date input" v-model="student.birthDate" :rules="[rules.required]" required 
-                            input-format="yyyy-mm-dd" clearable placeholder=" "></v-date-input>
-                        </v-col>
-
-                        <!-- Birth Place -->
-                        <v-col cols="12" sm="6">
-                            <v-text-field v-model="student.birthPlace" label="Birth Place" placeholder="City, Country"
-                                          :rules="[rules.required]" prepend-inner-icon="mdi-map-marker" required></v-text-field>
-                        </v-col>
-
-                        <!-- Parent ID -->
-                        <v-col cols="12" sm="6">
-                            <v-text-field v-model="student.parentId" label="Parent/Guardian ID"
-                                          placeholder="e.g., PAR-5501" :rules="[rules.required]"
-                                          prepend-inner-icon="mdi-account-shield" required></v-text-field>
-                        </v-col>
-
-                        <!-- Mobile Number -->
-                        <v-col cols="12" sm="6">
-                            <v-text-field v-model="student.mobileNumber" label="Mobile Number"
-                                          placeholder="e.g., +123456789" :rules="[rules.required, rules.phone]"
-                                          prepend-inner-icon="mdi-phone" required></v-text-field>
-                        </v-col>
-
-                        <!-- Nationality -->
-                        <v-col cols="12" sm="6">
-                            <v-text-field v-model="student.nationality" label="Nationality" placeholder="e.g., Canadian"
-                                          :rules="[rules.required]" prepend-inner-icon="mdi-flag" required></v-text-field>
-                        </v-col>
-
-                        <!-- Class Number (Selection List) -->
-                        <v-col cols="12" sm="6">
-                            <v-select v-model="student.classNumber" :items="classOptions" label="Class Number"
-                                      :rules="[rules.required]" prepend-inner-icon="mdi-google-classroom" required></v-select>
-                        </v-col>
-
-                        <!-- Gender -->
-                        <v-col cols="12" sm="6">
-                            <v-radio-group v-model="student.gender" label="Gender" inline :rules="[rules.required]">
-                                <v-radio label="Male" value="Male" color="primary" />
-                                <v-radio label="Female" value="Female" color="primary" />
-                            </v-radio-group>
-                        </v-col>
-
-                        <!-- Order in the Family -->
-                        <v-col cols="12" sm="6">
-                            <v-text-field v-model.number="student.familyOrder" type="number" min="1"
-                                          label="Order in Family" placeholder="e.g., 1 for oldest"
-                                          :rules="[rules.required, rules.positiveNumber]"
-                                          prepend-inner-icon="mdi-human-male-female-child" required></v-text-field>
-                        </v-col>
-
-                        <!-- Address -->
-                        <v-col cols="12">
-                            <v-text-field v-model="student.address" label="Home Address"
-                                          placeholder="Street name, Building, Apartment No." :rules="[rules.required]"
-                                          prepend-inner-icon="mdi-home" required></v-text-field>
-                        </v-col>
-
-                        <!-- Health Status -->
-                        <v-col cols="12">
-                            <v-text-field v-model="student.healthStatus" label="Health Status / Medical Considerations"
-                                          placeholder="e.g., None, Asthma, Peanut Allergy"
-                                          prepend-inner-icon="mdi-heart-pulse"></v-text-field>
-                        </v-col>
-
-                        <!-- Notes -->
-                        <v-col cols="12">
-                            <v-textarea v-model="student.notes" label="Additional Notes"
-                                        placeholder="Enter any other relevant remarks here..."
-                                        prepend-inner-icon="mdi-note-text" rows="3" auto-grow></v-textarea>
-                        </v-col>
-                    </v-row>
-
-                    <!-- Form Actions -->
-                    <v-card-actions class="justify-end px-0 mt-4">
-                        <v-btn variant="text" color="error" class="me-2" @@click="resetForm">
-                            Reset
-                        </v-btn>
-                        <v-btn type="submit" color="primary" variant="elevated" :disabled="!isFormValid">
-                            Submit Student
-                        </v-btn>
-                    </v-card-actions>
-                </v-form>
-            </v-card>
                 <v-dialog v-model="dialog" max-width="400">
       <v-card>
         <v-card-text>
@@ -324,10 +205,19 @@ const handleSubmit = () => {
 function submit() {
     console.log('submitted....')
 }
+const items = [
+    { text: 'My Files', icon: 'mdi-folder' },
+    { text: 'Shared with me', icon: 'mdi-account-multiple' },
+    { text: 'Starred', icon: 'mdi-star' },
+    { text: 'Recent', icon: 'mdi-history' },
+    { text: 'Offline', icon: 'mdi-check-circle' },
+    { text: 'Uploads', icon: 'mdi-upload' },
+    { text: 'Backups', icon: 'mdi-cloud-upload' },
+  ]
             return {
                 form, isFormValid, student, classOptions,
                 resetForm, submitForm, rules, dialog, inputValue,
-                handleSubmit, submit, menu
+                handleSubmit, submit, menu, items
             }
         }
         // Form Ref and state

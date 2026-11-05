@@ -4,36 +4,26 @@
         :items="books" show-select v-model="selected" item-value="id" select-strategy="single">
             <template v-slot:top>
                 <v-toolbar flat title="Books">
-<div class="d-flex ga-1 px-1">
+<div class="d-flex ga-1 px-2">
 
 <v-icon-btn
               icon="mdi-pencil"
-              size="24"
+              size="32"
               variant="outlined"
               @@click="edit"
               color="primary"
               v-show="selected?.length > 0"
             >
-              <v-icon size="16"></v-icon>
-            </v-icon-btn>
-<v-icon-btn
-              icon="mdi-delete"
-              size="24"
-              variant="outlined"
-              @@click="remove"
-              color="error"
-              v-show="selected?.length > 0"
-            >
-              <v-icon size="16"></v-icon>
+              <v-icon size="24"></v-icon>
             </v-icon-btn>
             <v-icon-btn
               icon="mdi-plus"
-              size="24"
+              size="32"
               variant="outlined"
               @@click="add"
               color="success"
             >
-              <v-icon size="16"></v-icon>
+              <v-icon size="24"></v-icon>
             </v-icon-btn>
 
 </div>
@@ -82,8 +72,10 @@
                 <v-btn text="Cancel" variant="plain" @@click="dialog = false"></v-btn>
 
                 <v-spacer></v-spacer>
-
+                <div class="d-flex ga-2">
+                    <v-btn text="Delete" color="error" @@click="save"></v-btn>
                 <v-btn text="Save" @@click="save"></v-btn>
+                </div>
             </v-card-actions>
         </v-card>
     </v-dialog>
