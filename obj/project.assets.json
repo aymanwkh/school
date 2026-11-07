@@ -336,11 +336,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/ayman/Projects/school/school.csproj",
+      "projectUniqueName": "/home/ayman/project/school/school.csproj",
       "projectName": "school",
-      "projectPath": "/home/ayman/Projects/school/school.csproj",
+      "projectPath": "/home/ayman/project/school/school.csproj",
       "packagesPath": "/home/ayman/.nuget/packages/",
-      "outputPath": "/home/ayman/Projects/school/obj/",
+      "outputPath": "/home/ayman/project/school/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/ayman/.nuget/NuGet/NuGet.Config"

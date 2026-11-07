@@ -1,226 +1,37 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
 <div id="app">
     <v-container fluid>
-        <!-- Page Header -->
-        <v-row class="mb-4" align="center">
-            <v-col>
-                <h1 class="text-h4 font-weight-bold text-primary">Parent Directory</h1>
-            </v-col>
-            <v-col cols="auto">
-                <v-btn color="primary" prepend-icon="mdi-plus" size="large" @@click="openDialog()">
-                    Add New Parent1
-                </v-btn>
-                <v-btn color="error" prepend-icon="mdi-delete" size="large" @@click="openDialog()">
-                    delete New Parent
-                </v-btn>
-            </v-col>
-        </v-row>
+        <v-row class="align-center justify-center" density="comfortable">
+    <v-col cols="6" md="3">
+      <v-card class="mx-auto" title="Pages" href="home/pages/"></v-card>
+    </v-col>
+    <v-col cols="6" md="3">
+      <v-card class="mx-auto" title="Sections"></v-card>
+    </v-col>
+    <v-col cols="6" md="3">
+      <v-card class="mx-auto" title="Classes"></v-card>
+    </v-col>
+    <v-col cols="6" md="3">
+      <v-card class="mx-auto" title="Families"></v-card>
+    </v-col>
+    <v-col cols="6" md="3">
+      <v-card class="mx-auto" title="Students"></v-card>
+    </v-col>
 
-        <!-- Filter & Search Controls -->
-        <v-card class="mb-6" variant="outlined">
-            <v-card-text>
-                <v-row>
-                    <v-col cols="12" md="4">
-                        <v-text-field v-model="search" prepend-inner-icon="mdi-magnify"
-                                      label="Search by name, phone, or child" variant="outlined" density="compact"
-                                      hide-details></v-text-field>
-                    </v-col>
-                </v-row>
-            </v-card-text>
-        </v-card>
-
-        <!-- Main Data Table -->
-        <v-card variant="outlined">
-            <v-data-table :headers="headers" :items="parents" :search="search" hover>
-                <!-- Custom Child Column Template -->
-                <template #[`item.childName`]="{ item }">
-                    <v-chip v-if="item.childName" color="secondary" size="small" variant="flat"
-                            prepend-icon="mdi-account-child">
-                        {{ item.childName }}
-                    </v-chip>
-                    <span v-else class="text-caption text-error font-italic">No child linked</span>
-                </template>
-
-                <!-- Actions Column Template -->
-                <template #[`item.actions`]="{ item }">
-                    <v-btn icon="mdi-pencil" variant="text" color="info" size="small"
-                    @@click="openDialog(item)"></v-btn>
-                    <v-btn icon="mdi-delete" variant="text" color="error" size="small"
-                    @@click="deleteParent(item)"></v-btn>
-                </template>
-            </v-data-table>
-        </v-card>
-
-        <!-- Add/Edit Modal Dialog -->
-        <v-dialog v-model="dialog" max-width="700px" persistent>
-            <v-card>
-                <v-card-title class="bg-primary text-white d-flex justify-between align-center pa-4">
-                    <span class="text-h6">{{ formTitle }}</span>
-                    <v-spacer></v-spacer>
-                    <v-btn icon="mdi-close" variant="text" color="white" @@click="closeDialog"></v-btn>
-                </v-card-title>
-
-                <v-card-text class="pt-4">
-                    <v-form ref="formRef" v-model="isFormValid">
-                        <v-row>
-                            <!-- Parent Information Section -->
-                            <v-col cols="12">
-                                <div class="text-subtitle-2 font-weight-bold text-primary mb-2">Parent Details</div>
-                            </v-col>
-
-                            <v-col cols="12" md="6">
-                                <v-text-field v-model="editedItem.name" label="Parent Full Name *"
-                                              :rules="[v => !!v || 'Name is required']" variant="outlined"
-                                              density="comfortable"></v-text-field>
-                            </v-col>
-
-                            <v-col cols="12" md="6">
-                                <v-checkbox label="Checkbox"></v-checkbox>
-                                <v-text-field v-model="editedItem.mobile" label="Mobile Number *" :rules="[
-                                v => !!v || 'Mobile number is required',
-                                v => /^\+?[0-9]{7,15}$/.test(v) || 'Enter a valid mobile number'
-                                ]" variant="outlined" density="comfortable" prefix="+"></v-text-field>
-                            </v-col>
-
-                            <v-col cols="12" md="6">
-                                <v-combobox v-model="editedItem.nationality" :items="nationalities"
-                                            label="Nationality *" :rules="[v => !!v || 'Nationality is required']"
-                                            variant="outlined" density="comfortable" clearable></v-combobox>
-                            </v-col>
-
-                            <v-col cols="12" md="6">
-                                <v-text-field v-model="editedItem.address" label="Residential Address *"
-                                              :rules="[v => !!v || 'Address is required']" variant="outlined"
-                                              density="comfortable"></v-text-field>
-                            </v-col>
-
-                            <!-- Child Information Section -->
-                            <v-col cols="12" class="mt-2">
-                                <div class="text-subtitle-2 font-weight-bold text-secondary mb-2">Student Association
-                                </div>
-                                <v-divider class="mb-3"></v-divider>
-                            </v-col>
-
-                            <v-col cols="12" md="12">
-                                <v-text-field v-model="editedItem.childName" label="Child's Full Name"
-                                              hint="Leave empty if no child is registered yet" persistent-hint variant="outlined"
-                                              density="comfortable" prepend-inner-icon="mdi-account"></v-text-field>
-                            </v-col>
-                        </v-row>
-                    </v-form>
-                </v-card-text>
-
-                <v-card-actions class="pa-4">
-                    <v-spacer></v-spacer>
-                    <v-btn variant="text" color="grey-darken-1" @@click="closeDialog">Cancel</v-btn>
-                    <v-btn :disabled="!isFormValid" color="primary" variant="flat" @@click="save">Save Profile</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+  </v-row>
     </v-container>
 </div>
 @section Scripts {
-    <script>
-        const { ref, computed, nextTick } = Vue
-        function setup() {
+  <script>
+  const { ref, onMounted } = Vue
+    function setup() {
+      const data = ref([])
+    onMounted(async () => {
+        const response = await fetch('/home/getPages')
+        data.value = await response.json()
+        console.log('data =', data.value)
+    })
+      return { data }
+    }
+  </script>
 
-            // --- State Variables ---
-            const search = ref('')
-            const dialog = ref(false)
-            const isFormValid = ref(false)
-            const formRef = ref(null)
-
-            // Initial state template for a parent object
-            const defaultItem = {
-                id: null,
-                name: '',
-                mobile: '',
-                nationality: null,
-                address: '',
-                childName: ''
-            }
-
-            const editedItem = ref({ ...defaultItem })
-            const editedIndex = ref(-1)
-
-            // --- Sample Lists / Mock Data ---
-            const nationalities = ref([
-                'American', 'British', 'Canadian', 'Egyptian', 'Emirati',
-                'Indian', 'Jordanian', 'Saudi', 'Syrian', 'Other'
-            ])
-
-            const parents = ref([
-                { id: 1, name: 'John Doe', mobile: '5550199', nationality: 'American', address: '123 Main St', childName: 'Alice Doe' },
-                { id: 2, name: 'Ahmed Ali', mobile: '96279000', nationality: 'Jordanian', address: 'Building 4, Amman', childName: 'Omar Ahmed' },
-                { id: 3, name: 'Sarah Smith', mobile: '4440283', nationality: 'British', address: '77 Baker St', childName: '' }
-            ])
-
-            // --- Data Table Configuration ---
-            const headers = [
-                { title: 'Parent Name', key: 'name', align: 'start', sortable: true },
-                { title: 'Mobile', key: 'mobile', sortable: false },
-                { title: 'Nationality', key: 'nationality', sortable: true },
-                { title: 'Address', key: 'address', sortable: false },
-                { title: 'Registered Child', key: 'childName', sortable: true },
-                { title: 'Actions', key: 'actions', sortable: false, align: 'end' }
-            ]
-
-            // --- Computed Properties ---
-            const formTitle = computed(() => {
-                return editedIndex.value === -1 ? 'Register New Parent' : 'Modify Parent Profile'
-            })
-            // --- Methods ---
-            function openDialog(item = null) {
-                if (item) {
-                    editedIndex.value = parents.value.indexOf(item)
-                    editedItem.value = { ...item }
-                } else {
-                    editedIndex.value = -1
-                    editedItem.value = { ...defaultItem }
-                }
-                dialog.value = true
-            }
-
-            function closeDialog() {
-                dialog.value = false
-                nextTick(() => {
-                    editedItem.value = { ...defaultItem }
-                    editedIndex.value = -1
-                    if (formRef.value) formRef.value.resetValidation()
-                })
-            }
-
-            function save() {
-                if (!isFormValid.value) return
-
-                if (editedIndex.value > -1) {
-                    // Modify existing record
-                    parents.value[editedIndex.value] = { ...editedItem.value }
-                } else {
-                    // Append new record with basic unique ID assignment
-                    const newId = parents.value.length ? Math.max(...parents.value.map(p => p.id)) + 1 : 1
-                    parents.value.push({ ...editedItem.value, id: newId })
-                }
-                closeDialog()
-            }
-
-            function deleteParent(item) {
-                const index = parents.value.indexOf(item)
-                if (confirm(`Are you sure you want to delete profile for ${item.name}?`)) {
-                    parents.value.splice(index, 1)
-                }
-            }
-
-            return {
-                search, dialog, isFormValid, formRef,
-                editedItem, editedIndex, nationalities, parents, headers,
-                formTitle, openDialog, closeDialog, save, deleteParent
-            }
-        }
-    </script>
 }
-
-

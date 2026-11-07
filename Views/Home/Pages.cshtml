@@ -1,0 +1,117 @@
+<div id="app">
+    <v-sheet border rounded>
+        <v-data-table :headers="headers" hide-default-footer :items="pages" show-select v-model="selected"
+                      item-value="id" select-strategy="single">
+            <template v-slot:top>
+                <v-toolbar flat title="Pages">
+                    <div class="d-flex ga-1 px-2">
+
+                        <v-icon-btn icon="mdi-pencil" size="32" variant="outlined" @@click="edit" color="primary"
+                                    v-show="selected?.length > 0">
+                            <v-icon size="24"></v-icon>
+                        </v-icon-btn>
+                        <v-icon-btn icon="mdi-plus" size="32" variant="outlined" @@click="add" color="success">
+                            <v-icon size="24"></v-icon>
+                        </v-icon-btn>
+
+                    </div>
+                </v-toolbar>
+            </template>
+
+            <template v-slot:no-data>
+                <h6>لا يوجد بيانات</h6>
+            </template>
+        </v-data-table>
+    </v-sheet>
+
+    <v-dialog v-model="dialog" max-width="500">
+        <v-card :title="`${isEditing ? 'Edit' : 'Add'} a Page`">
+            <template v-slot:text>
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field v-model="formModel.name" label="الاسم"></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12">
+                        <v-text-field v-model="formModel.path" label="المسار"></v-text-field>
+                    </v-col>
+
+                </v-row>
+            </template>
+
+            <v-divider></v-divider>
+
+            <v-card-actions class="bg-surface-light">
+                <v-btn text="Cancel" variant="plain" @@click="dialog = false"></v-btn>
+
+                <v-spacer></v-spacer>
+                <div class="d-flex ga-2">
+                    <v-btn text="Delete" color="error" @@click="save" v-show="isEditing""></v-btn>
+                    <v-btn text="Save" @@click="save"></v-btn>
+                </div>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+</div>
+@section Scripts {
+    <script>
+        const { ref, onMounted, shallowRef, toRef } = Vue
+          function setup() {
+            const selected = ref([])
+            const pages = ref([])
+            const dialog = shallowRef(false)
+
+            const formModel = ref(createNewRecord())
+            const isEditing = toRef(() => !!formModel.value.id)
+            const headers = [
+                { title: 'الرقم', key: 'id', align: 'start' },
+                { title: 'الاسم', key: 'name', align: 'start' },
+                { title: 'المسار', key: 'path', align: 'start' },
+              ]
+            function createNewRecord () {
+                return {
+                  name: '',
+                  path: '',
+                }
+              }
+              function add () {
+                  formModel.value = createNewRecord()
+                  dialog.value = true
+                }
+
+                function edit (id) {
+                  const found = pages.value.find(i => i.id === id)
+
+                  formModel.value = {
+                    id: found.id,
+                    name: found.name,
+                    path: found.path,
+                  }
+
+                  dialog.value = true
+                }
+                function remove (id) {
+                    const index = pages.value.findIndex(i => i.id === id)
+                    pages.value.splice(index, 1)
+                  }
+
+                  function save () {
+                    if (isEditing.value) {
+                      const index = pages.value.findIndex(i => i.id === formModel.value.id)
+                      pages.value[index] = formModel.value
+                    } else {
+                      formModel.value.id = pages.value.length + 1
+                      pages.value.push(formModel.value)
+                    }
+
+                    dialog.value = false
+                  }
+
+          onMounted(async () => {
+              const response = await fetch('/home/getPages')
+              pages.value = await response.json()
+          })
+            return { pages, isEditing, selected, headers, formModel, add, save, remove, edit, dialog }
+          }
+    </script>
+}

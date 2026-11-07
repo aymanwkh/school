@@ -1,33 +1,21 @@
 <div id="app">
     <v-sheet border rounded>
-        <v-data-table :headers="headers" hide-default-footer 
-        :items="books" show-select v-model="selected" item-value="id" select-strategy="single">
+        <v-data-table :headers="headers" hide-default-footer :items="books" show-select v-model="selected"
+                      item-value="id" select-strategy="single">
             <template v-slot:top>
-                <v-toolbar flat title="Books">
-<div class="d-flex ga-1 px-2">
+                <v-toolbar flat title="Pages">
+                    <div class="d-flex ga-1 px-2">
 
-<v-icon-btn
-              icon="mdi-pencil"
-              size="32"
-              variant="outlined"
-              @@click="edit"
-              color="primary"
-              v-show="selected?.length > 0"
-            >
-              <v-icon size="24"></v-icon>
-            </v-icon-btn>
-            <v-icon-btn
-              icon="mdi-plus"
-              size="32"
-              variant="outlined"
-              @@click="add"
-              color="success"
-            >
-              <v-icon size="24"></v-icon>
-            </v-icon-btn>
+                        <v-icon-btn icon="mdi-pencil" size="32" variant="outlined" @@click="edit" color="primary"
+                                    v-show="selected?.length > 0">
+                            <v-icon size="24"></v-icon>
+                        </v-icon-btn>
+                        <v-icon-btn icon="mdi-plus" size="32" variant="outlined" @@click="add" color="success">
+                            <v-icon size="24"></v-icon>
+                        </v-icon-btn>
 
-</div>
-                    </v-toolbar>
+                    </div>
+                </v-toolbar>
             </template>
 
             <template v-slot:no-data>
@@ -38,8 +26,7 @@
     </v-sheet>
 
     <v-dialog v-model="dialog" max-width="500">
-        <v-card :subtitle="`${isEditing ? 'Update' : 'Create'} your favorite book`"
-                :title="`${isEditing ? 'Edit' : 'Add'} a Book`">
+        <v-card :title="`${isEditing ? 'Edit' : 'Add'} a Page`">
             <template v-slot:text>
                 <v-row>
                     <v-col cols="12">
@@ -74,7 +61,7 @@
                 <v-spacer></v-spacer>
                 <div class="d-flex ga-2">
                     <v-btn text="Delete" color="error" @@click="save"></v-btn>
-                <v-btn text="Save" @@click="save"></v-btn>
+                    <v-btn text="Save" @@click="save"></v-btn>
                 </div>
             </v-card-actions>
         </v-card>
@@ -83,7 +70,7 @@
 @section Scripts {
     <script>
         const { onMounted, ref, shallowRef, toRef } = Vue
-        function setup () {
+        function setup() {
 
             const currentYear = new Date().getFullYear()
 

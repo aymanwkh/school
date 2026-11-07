@@ -8,6 +8,7 @@ using school.Models;
 namespace school.Controllers;
 
 public record struct ClassInfo(int id, string name);
+public record struct PageInfo(int id, string name, string path);
 public class HomeController : Controller
 {
     public IDbConnection CreateConnection() => new SqliteConnection("Data Source=app.db");
@@ -15,45 +16,44 @@ public class HomeController : Controller
     {
         try
         {
-            
+
         using var connection = CreateConnection();
-        var sql = @"
-        CREATE TABLE IF NOT EXISTS classes (
+            connection.Execute(@"
+            CREATE TABLE IF NOT EXISTS classes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL
+        );");
+        connection.Execute(@"
+        CREATE TABLE IF NOT EXISTS pages (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL
-        );";
-        connection.Execute(sql);
-        sql = @"
+            name TEXT NOT NULL,
+            path text not null
+        );");
+        connection.Execute(@"
         CREATE TABLE IF NOT EXISTS countries (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL
-        );";
-        connection.Execute(sql);
-        sql = @"
+        );");
+        connection.Execute(@"
         CREATE TABLE IF NOT EXISTS families (
             id integer PRIMARY KEY AUTOINCREMENT,
             name text NOT NULL,
             nationality integer not null,
             mobile_no text
-        );";
-        connection.Execute(sql);
-        sql = @"
+        );");
+        connection.Execute(@"
         CREATE TABLE IF NOT EXISTS students (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             family INTEGER not null,
             birth_date TEXT NOT NULL,
-            gender integer not null
-        );";
-        connection.Execute(sql);
-        sql = @"
-        ALTER TABLE students ADD COLUMN class_id integer
-        ;";
-        connection.Execute(sql);
+            gender integer not null,
+            class_id integer not null
+        );");
         }
         catch(Exception e)
         {
-            Console.WriteLine("error");
+            Console.WriteLine("exception : " + e.ToString());
         }
     }
     public IActionResult Index()
@@ -67,6 +67,17 @@ public class HomeController : Controller
     public IActionResult Privacy()
     {
         return View();
+    }
+    public IActionResult Pages()
+    {
+        return View();
+    }
+    public async Task<IActionResult> GetPages()
+    {
+        using var connection = CreateConnection();
+        var sql = "SELECT id, name, path FROM pages order by id";
+        var result = await connection.QueryAsync<PageInfo>(sql);
+        return Ok(result);
     }
     public async Task<IActionResult> AddClass(ClassInfo classInfo)
     {

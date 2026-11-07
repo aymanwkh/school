@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gl0rQ6R5AGI=",
+  "dgSpecHash": "3UaHixtcxP0=",
   "success": true,
-  "projectFilePath": "/home/ayman/Projects/school/school.csproj",
+  "projectFilePath": "/home/ayman/project/school/school.csproj",
   "expectedPackageFiles": [
     "/home/ayman/.nuget/packages/dapper/2.1.89/dapper.2.1.89.nupkg.sha512",
     "/home/ayman/.nuget/packages/microsoft.data.sqlite/10.0.14/microsoft.data.sqlite.10.0.14.nupkg.sha512",

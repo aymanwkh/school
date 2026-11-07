@@ -12,45 +12,53 @@ build_property.EntryPointFilePath =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = school
 build_property.RootNamespace = school
-build_property.ProjectDir = /home/ayman/Projects/school/
+build_property.ProjectDir = /home/ayman/project/school/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 10.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /home/ayman/Projects/school
+build_property.MSBuildProjectDirectory = /home/ayman/project/school
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[/home/ayman/Projects/school/Views/Home/ClassPage.cshtml]
+[/home/ayman/project/school/Views/Home/ClassPage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9DbGFzc1BhZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ayman/Projects/school/Views/Home/Index.cshtml]
+[/home/ayman/project/school/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ayman/Projects/school/Views/Home/Privacy.cshtml]
+[/home/ayman/project/school/Views/Home/Index1.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleDEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/ayman/project/school/Views/Home/Pages.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9QYWdlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/ayman/project/school/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ayman/Projects/school/Views/Shared/Error.cshtml]
+[/home/ayman/project/school/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ayman/Projects/school/Views/Shared/_ValidationScriptsPartial.cshtml]
+[/home/ayman/project/school/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ayman/Projects/school/Views/_ViewImports.cshtml]
+[/home/ayman/project/school/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ayman/Projects/school/Views/_ViewStart.cshtml]
+[/home/ayman/project/school/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ayman/Projects/school/Views/Shared/_Layout.cshtml]
+[/home/ayman/project/school/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-sgnvwwuxnz
