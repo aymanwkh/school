@@ -1,0 +1,22 @@
+<v-snackbar
+    color="success"
+    location="bottom start"
+    prepend-icon="$success"
+    :text="msg"
+    timeout="-1"
+    title="Success"
+    contained
+    model-value
+    v-model="alert"
+>
+    <template v-slot:actions>
+    <v-btn
+        class="px-3"
+        density="comfortable"
+        rounded="lg"
+        text="Got it!"
+        variant="tonal"
+        @@click.stop
+    ></v-btn>
+    </template>
+</v-snackbar>

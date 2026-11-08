@@ -8,7 +8,7 @@ using school.Models;
 namespace school.Controllers;
 
 public record struct ClassInfo(int id, string name);
-public record struct PageInfo(int id, string name, string path);
+public record struct PageInfo(int? id, string name, string path);
 public class HomeController : Controller
 {
     public IDbConnection CreateConnection() => new SqliteConnection("Data Source=app.db");
@@ -79,6 +79,36 @@ public class HomeController : Controller
         var result = await connection.QueryAsync<PageInfo>(sql);
         return Ok(result);
     }
+     [HttpPost]
+    public async Task<IActionResult> AddPage([FromBody] PageInfo pageInfo)
+    {
+        using var connection = CreateConnection();
+        var sql = "insert into pages (name, path) values(@name, @path)";
+        await connection.ExecuteAsync(sql, pageInfo);
+        sql = "SELECT id, name, path FROM pages order by id";
+        var result = await connection.QueryAsync<PageInfo>(sql);
+        return Ok(result);
+    }
+    [HttpPost]
+    public async Task<IActionResult> EditPage([FromBody] PageInfo pageInfo)
+    {
+        using var connection = CreateConnection();
+        var sql = "update pages set name = @name, path = @path where id = @id";
+        await connection.ExecuteAsync(sql, pageInfo);
+        sql = "SELECT id, name, path FROM pages order by id";
+        var result = await connection.QueryAsync<PageInfo>(sql);
+        return Ok(result);
+    }
+   [HttpDelete]
+  public async Task<IActionResult> DeletePage(int id)
+  {
+      using var connection = CreateConnection();
+      var sql = "delete from pages where id = @id";
+      await connection.ExecuteAsync(sql, id);
+      sql = "SELECT id, name, path FROM pages order by id";
+      var result = await connection.QueryAsync<PageInfo>(sql);
+      return Ok(result);
+  }
     public async Task<IActionResult> AddClass(ClassInfo classInfo)
     {
         using var connection = CreateConnection();

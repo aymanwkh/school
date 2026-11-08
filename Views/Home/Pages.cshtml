@@ -46,36 +46,36 @@
 
                 <v-spacer></v-spacer>
                 <div class="d-flex ga-2">
-                    <v-btn text="Delete" color="error" @@click="save" v-show="isEditing""></v-btn>
+                    <v-btn text="Delete" color="error" @@click="save" v-show="isEditing"></v-btn>
                     <v-btn text="Save" @@click="save"></v-btn>
                 </div>
             </v-card-actions>
         </v-card>
     </v-dialog>
+    <partial name="_Msg" />
 </div>
 @section Scripts {
     <script>
         const { ref, onMounted, shallowRef, toRef } = Vue
           function setup() {
+            const alert = ref(false)
+            const msg = ref('')
             const selected = ref([])
             const pages = ref([])
             const dialog = shallowRef(false)
 
-            const formModel = ref(createNewRecord())
+            const formModel = ref()
             const isEditing = toRef(() => !!formModel.value.id)
             const headers = [
                 { title: 'الرقم', key: 'id', align: 'start' },
                 { title: 'الاسم', key: 'name', align: 'start' },
                 { title: 'المسار', key: 'path', align: 'start' },
               ]
-            function createNewRecord () {
-                return {
-                  name: '',
-                  path: '',
-                }
-              }
-              function add () {
-                  formModel.value = createNewRecord()
+             function add () {
+                  formModel.value = {
+                    name: '',
+                    path: '',
+                  }
                   dialog.value = true
                 }
 
@@ -90,20 +90,51 @@
 
                   dialog.value = true
                 }
-                function remove (id) {
-                    const index = pages.value.findIndex(i => i.id === id)
-                    pages.value.splice(index, 1)
-                  }
-
-                  function save () {
-                    if (isEditing.value) {
-                      const index = pages.value.findIndex(i => i.id === formModel.value.id)
-                      pages.value[index] = formModel.value
-                    } else {
-                      formModel.value.id = pages.value.length + 1
-                      pages.value.push(formModel.value)
+                async function remove () {
+                    const response = await fetch('/home/deletePage/' + formModel.value.id, {
+                      method: 'DELETE'
+                    })
+                    if (response.ok) {
+                      pages.value = await response.json()
+                      dialog.value = false
+                      msg.value = "Deleted successfully"
+                      alert.value = true
                     }
-
+                  }
+                  async function addPage() {
+                      const response = await fetch('/home/addPage', {
+                        method: 'POST', // Specify the method
+                        headers: {
+                          'Content-Type': 'application/json', // Indicate the content type
+                        },
+                        body: JSON.stringify(formModel.value), // Convert the data to a JSON string
+                      })
+                      if (response.ok) {
+                        pages.value = await response.json()
+                        msg.value = "Added successfuly"
+                        alert.value = true
+                      }
+                    }
+                    async function editPage() {
+                        const response = await fetch('/home/editPage', {
+                          method: 'POST', // Specify the method
+                          headers: {
+                            'Content-Type': 'application/json', // Indicate the content type
+                          },
+                          body: JSON.stringify(formModel.value), // Convert the data to a JSON string
+                        })
+                        if (response.ok) {
+                          pages.value = await response.json()
+                          msg.value = "Editted successfuly"
+                          alert.value = true
+                        }
+                      }
+                  async function save () {
+                    if (isEditing.value) {
+                      await editPage()
+                    } else {
+                      await addPage()
+                    }
                     dialog.value = false
                   }
 
@@ -111,7 +142,8 @@
               const response = await fetch('/home/getPages')
               pages.value = await response.json()
           })
-            return { pages, isEditing, selected, headers, formModel, add, save, remove, edit, dialog }
+            return { pages, isEditing, selected, headers, formModel, add, save,
+              remove, edit, dialog, alert, msg }
           }
     </script>
 }
