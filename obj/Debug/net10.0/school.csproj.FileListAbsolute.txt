@@ -251,4 +251,5 @@
 /home/ayman/Projects/school/obj/Debug/net10.0/ref/school.dll
 /home/ayman/Projects/school/obj/Debug/net10.0/school.sourcelink.json
 /home/ayman/project/school/obj/Debug/net10.0/school.sourcelink.json
-/home/ayman/project/school/obj/Debug/net10.0/compressed/ewt7r9ggmh-{0}-b48opvudou-b48opvudou.gz
+/home/ayman/project/school/obj/Debug/net10.0/compressed/dedly5inln-{0}-5ipweew5fc-5ipweew5fc.gz
+/home/ayman/project/school/obj/Debug/net10.0/compressed/ewt7r9ggmh-{0}-7gq2rb9mi0-7gq2rb9mi0.gz

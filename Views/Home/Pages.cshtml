@@ -23,7 +23,7 @@
             </template>
         </v-data-table>
     </v-sheet>
-
+    <toast></toast>
     <v-dialog v-model="dialog" max-width="500">
         <v-card :title="`${isEditing ? 'Edit' : 'Add'} a Page`">
             <template v-slot:text>
@@ -52,7 +52,6 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
-    <partial name="_Msg" />
 </div>
 @section Scripts {
     <script>
