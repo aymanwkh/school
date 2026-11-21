@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/ayman/project/school/school.csproj": {}
+    "C:\\dev\\school\\school.csproj": {}
   },
   "projects": {
-    "/home/ayman/project/school/school.csproj": {
+    "C:\\dev\\school\\school.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/ayman/project/school/school.csproj",
+        "projectUniqueName": "C:\\dev\\school\\school.csproj",
         "projectName": "school",
-        "projectPath": "/home/ayman/project/school/school.csproj",
-        "packagesPath": "/home/ayman/.nuget/packages/",
-        "outputPath": "/home/ayman/project/school/obj/",
+        "projectPath": "C:\\dev\\school\\school.csproj",
+        "packagesPath": "C:\\Users\\lina\\.nuget\\packages\\",
+        "outputPath": "C:\\dev\\school\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/ayman/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\lina\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -74,7 +74,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.403/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.404/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

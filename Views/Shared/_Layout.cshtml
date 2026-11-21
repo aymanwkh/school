@@ -29,18 +29,28 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Pages">Pages</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="PageList">Pages</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" id="app">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-    </div>
+<v-snackbar
+        v-model="snackbar.show"
+        :color="snackbar.color"
+        :timeout="snackbar.timeout"
+      >
+        {{ snackbar.text }}
+        <template v-slot:actions>
+          <v-btn variant="text" @@click="snackbar.show = false">Close</v-btn>
+        </template>
+      </v-snackbar>
+          </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -51,7 +61,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@4.3.1/dist/vuetify.min.js"></script>
+    <script src="~/js/msg.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/app.js" asp-append-version="true"></script>
 </body>
 </html>

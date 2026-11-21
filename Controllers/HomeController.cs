@@ -68,7 +68,7 @@ public class HomeController : Controller
     {
         return View();
     }
-    public IActionResult Pages()
+    public IActionResult PageList()
     {
         return View();
     }

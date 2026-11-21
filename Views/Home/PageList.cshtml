@@ -1,13 +1,9 @@
-<div id="app">
     <v-sheet border rounded>
-        <v-data-table :headers="headers" hide-default-footer :items="pages" show-select v-model="selected"
-                      item-value="id" select-strategy="single">
+        <v-data-table :headers="headers" hide-default-footer :items="pages">
             <template v-slot:top>
                 <v-toolbar flat title="Pages">
                     <div class="d-flex ga-1 px-2">
-
-                        <v-icon-btn icon="mdi-pencil" size="32" variant="outlined" @@click="edit" color="primary"
-                                    v-show="selected?.length > 0">
+                        <v-icon-btn icon="mdi-text-search" size="32" variant="outlined" @@click="edit" color="primary">
                             <v-icon size="24"></v-icon>
                         </v-icon-btn>
                         <v-icon-btn icon="mdi-plus" size="32" variant="outlined" @@click="add" color="success">
@@ -17,13 +13,19 @@
                     </div>
                 </v-toolbar>
             </template>
-
+            <template v-slot:item.name="{ item }">
+                <v-chip
+                  :text="item.name"
+                  size="small"
+                  label
+                  :href="'/home/pageinfo/' + item.id"
+                ></v-chip>
+            </template>
             <template v-slot:no-data>
                 <h6>لا يوجد بيانات</h6>
             </template>
         </v-data-table>
     </v-sheet>
-    <toast></toast>
     <v-dialog v-model="dialog" max-width="500">
         <v-card :title="`${isEditing ? 'Edit' : 'Add'} a Page`">
             <template v-slot:text>
@@ -52,17 +54,13 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
-</div>
 @section Scripts {
     <script>
-        const { ref, onMounted, shallowRef, toRef } = Vue
-          function setup() {
+          function pageSetup() {
             const alert = ref(false)
-            const msg = ref('')
             const selected = ref([])
             const pages = ref([])
             const dialog = shallowRef(false)
-
             const formModel = ref()
             const isEditing = toRef(() => !!formModel.value.id)
             const headers = [
@@ -71,6 +69,7 @@
                 { title: 'المسار', key: 'path', align: 'start' },
               ]
              function add () {
+              msg('hiiii')
                   formModel.value = {
                     name: '',
                     path: '',
@@ -78,9 +77,8 @@
                   dialog.value = true
                 }
 
-                function edit (id) {
-                  const found = pages.value.find(i => i.id === id)
-
+                function edit () {
+                  const found = pages.value.find(i => i.id === selected.value[0])
                   formModel.value = {
                     id: found.id,
                     name: found.name,
@@ -96,7 +94,7 @@
                     if (response.ok) {
                       pages.value = await response.json()
                       dialog.value = false
-                      msg.value = "Deleted successfully"
+                      showSnackbar('Deleted successfully')
                       alert.value = true
                     }
                   }
@@ -110,7 +108,7 @@
                       })
                       if (response.ok) {
                         pages.value = await response.json()
-                        msg.value = "Added successfuly"
+                        showSnackbar('Added successfuly')
                         alert.value = true
                       }
                     }
@@ -124,7 +122,7 @@
                         })
                         if (response.ok) {
                           pages.value = await response.json()
-                          msg.value = "Editted successfuly"
+                          showSnackbar('Editted successfuly')
                           alert.value = true
                         }
                       }
@@ -142,7 +140,7 @@
               pages.value = await response.json()
           })
             return { pages, isEditing, selected, headers, formModel, add, save,
-              remove, edit, dialog, alert, msg }
+              remove, edit, dialog, alert }
           }
     </script>
 }

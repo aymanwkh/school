@@ -2,7 +2,7 @@
     <v-container fluid>
         <v-row class="align-center justify-center" density="comfortable">
     <v-col cols="6" md="3">
-      <v-card class="mx-auto" title="Pages" href="home/pages/"></v-card>
+      <v-card class="mx-auto" title="Pages" href="home/pagelist/"></v-card>
     </v-col>
     <v-col cols="6" md="3">
       <v-card class="mx-auto" title="Sections"></v-card>
@@ -22,8 +22,7 @@
 </div>
 @section Scripts {
   <script>
-  const { ref, onMounted } = Vue
-    function setup() {
+    function pageSetup() {
       const data = ref([])
     onMounted(async () => {
         const response = await fetch('/home/getPages')

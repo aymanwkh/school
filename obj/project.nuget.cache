@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "3UaHixtcxP0=",
+  "dgSpecHash": "gzJp348FsNw=",
   "success": true,
-  "projectFilePath": "/home/ayman/project/school/school.csproj",
+  "projectFilePath": "C:\\dev\\school\\school.csproj",
   "expectedPackageFiles": [
-    "/home/ayman/.nuget/packages/dapper/2.1.89/dapper.2.1.89.nupkg.sha512",
-    "/home/ayman/.nuget/packages/microsoft.data.sqlite/10.0.14/microsoft.data.sqlite.10.0.14.nupkg.sha512",
-    "/home/ayman/.nuget/packages/microsoft.data.sqlite.core/10.0.14/microsoft.data.sqlite.core.10.0.14.nupkg.sha512",
-    "/home/ayman/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.1.13/sqlitepclraw.bundle_e_sqlite3.2.1.13.nupkg.sha512",
-    "/home/ayman/.nuget/packages/sqlitepclraw.core/2.1.13/sqlitepclraw.core.2.1.13.nupkg.sha512",
-    "/home/ayman/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.13/sqlitepclraw.lib.e_sqlite3.2.1.13.nupkg.sha512",
-    "/home/ayman/.nuget/packages/sqlitepclraw.provider.e_sqlite3/2.1.13/sqlitepclraw.provider.e_sqlite3.2.1.13.nupkg.sha512"
+    "C:\\Users\\lina\\.nuget\\packages\\dapper\\2.1.89\\dapper.2.1.89.nupkg.sha512",
+    "C:\\Users\\lina\\.nuget\\packages\\microsoft.data.sqlite\\10.0.14\\microsoft.data.sqlite.10.0.14.nupkg.sha512",
+    "C:\\Users\\lina\\.nuget\\packages\\microsoft.data.sqlite.core\\10.0.14\\microsoft.data.sqlite.core.10.0.14.nupkg.sha512",
+    "C:\\Users\\lina\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.13\\sqlitepclraw.bundle_e_sqlite3.2.1.13.nupkg.sha512",
+    "C:\\Users\\lina\\.nuget\\packages\\sqlitepclraw.core\\2.1.13\\sqlitepclraw.core.2.1.13.nupkg.sha512",
+    "C:\\Users\\lina\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.13\\sqlitepclraw.lib.e_sqlite3.2.1.13.nupkg.sha512",
+    "C:\\Users\\lina\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.1.13\\sqlitepclraw.provider.e_sqlite3.2.1.13.nupkg.sha512"
   ],
   "logs": []
 }

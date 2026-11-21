@@ -145,8 +145,7 @@
 @section Scripts {
 
     <script>
-        const { ref, reactive } = Vue
-        function setup() {
+        function pageSetup() {
             const menu = ref(false)
             const form = ref(null)
             const isFormValid = ref(false)
@@ -223,10 +222,13 @@ const items = [
     { text: 'Uploads', icon: 'mdi-upload' },
     { text: 'Backups', icon: 'mdi-cloud-upload' },
   ]
+  function showDialog() {
+
+  }
             return {
                 form, isFormValid, student, classOptions,
                 resetForm, submitForm, rules, dialog, inputValue,
-                handleSubmit, submit, menu, items
+                handleSubmit, submit, menu, items, showDialog
             }
         }
         // Form Ref and state
