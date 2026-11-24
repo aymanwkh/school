@@ -3,113 +3,14 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<div id="app">
     <v-container fluid>
-            
-        <v-toolbar title="Student Information Registration"> 
-            <template v-slot:append>
-          <v-btn icon="mdi-magnify" @@click="showDialog"></v-btn>
-          <v-icon-btn icon="mdi-dots-vertical" :active="menu">
-            <v-icon></v-icon>
-            <v-menu v-model="menu" activator="parent" location="bottom end" offset="4">
-          <v-list
-            bg-color="surface-light"
-            class="d-flex flex-column ga-1 pa-1"
-            density="compact"
-            rounded="lg"
-            variant="text"
-            slim
-          >
-            <v-list-item
-              append-icon="mdi-account-circle-outline"
-              rounded="lg"
-              title="Account"
-              link
-            ></v-list-item>
-
-            <v-list-item
-              prepend-icon="mdi-cog-outline"
-              rounded="lg"
-              title="Settings"
-              link
-            ></v-list-item>
-
-            <v-list-item
-              prepend-icon="mdi-logout-variant"
-              rounded="lg"
-              title="Logout"
-              link
-            ></v-list-item>
-          </v-list>
-        </v-menu>
-          </v-icon-btn>
-      </template>
-        </v-toolbar>
+            <page-title title="Privacy"></page-title>
 <v-row>
-<v-col md="6" class="bg-purple-darken-2">
-
-  <v-card max-width="400" variant="flat">
-    <v-list lines="one" density="comfortable">
-      
-      <v-list-item class="border-b">
-        <!-- Label on the left -->
-        <v-list-item-title class="text-body-2 text-medium-emphasis">
-          Status
-        </v-list-item-title>
-
-        <!-- Value on the right using the append slot -->
-        <template #append>
-          <v-chip color="success" size="small" label>Active</v-chip>
-        </template>
-      </v-list-item>
-
-      <v-list-item class="border-b">
-        <v-list-item-title class="text-body-2 text-medium-emphasis">
-          Created By
-        </v-list-item-title>
-
-        <template #append>
-          <span class="text-body-2 text-high-emphasis font-weight-medium">
-            Alex Johnson
-          </span>
-        </template>
-      </v-list-item>
-
-    </v-list>
-  </v-card>
-</v-col>
-<v-col md="6">
-
-  <v-card max-width="400" variant="flat">
-    <v-list lines="one" density="comfortable">
-      
-      <v-list-item class="border-b">
-        <!-- Label on the left -->
-        <v-list-item-title class="text-body-2 text-medium-emphasis">
-          Status
-        </v-list-item-title>
-
-        <!-- Value on the right using the append slot -->
-        <template #append>
-          <v-chip color="success" size="small" label>Active</v-chip>
-        </template>
-      </v-list-item>
-
-      <v-list-item class="border-b">
-        <v-list-item-title class="text-body-2 text-medium-emphasis">
-          Created By
-        </v-list-item-title>
-
-        <template #append>
-          <span class="text-body-2 text-high-emphasis font-weight-medium">
-            Alex Johnson
-          </span>
-        </template>
-      </v-list-item>
-
-    </v-list>
-  </v-card>
-</v-col>
+  <display label="test" value="value" long="1"></display>
+  <display label="test2" value="value"></display>
+  <display label="test3" value="value"></display>
+  <display label="test4" value="value"></display>
+  <display label="test5" value="value" long="1"></display>
 </v-row>
 
 
@@ -146,7 +47,6 @@
 
     <script>
         function pageSetup() {
-            const menu = ref(false)
             const form = ref(null)
             const isFormValid = ref(false)
 
@@ -228,7 +128,7 @@ const items = [
             return {
                 form, isFormValid, student, classOptions,
                 resetForm, submitForm, rules, dialog, inputValue,
-                handleSubmit, submit, menu, items, showDialog
+                handleSubmit, submit, items, showDialog
             }
         }
         // Form Ref and state

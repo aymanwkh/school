@@ -3,7 +3,7 @@
             <template v-slot:top>
                 <v-toolbar flat title="Pages">
                     <div class="d-flex ga-1 px-2">
-                        <v-icon-btn icon="mdi-text-search" size="32" variant="outlined" @@click="edit" color="primary">
+                        <v-icon-btn icon="mdi-text-search" size="32" variant="outlined" @@click="dialog = true" color="primary">
                             <v-icon size="24"></v-icon>
                         </v-icon-btn>
                         <v-icon-btn icon="mdi-plus" size="32" variant="outlined" @@click="add" color="success">
@@ -27,7 +27,7 @@
         </v-data-table>
     </v-sheet>
     <v-dialog v-model="dialog" max-width="500">
-        <v-card :title="`${isEditing ? 'Edit' : 'Add'} a Page`">
+        <v-card title="search">
             <template v-slot:text>
                 <v-row>
                     <v-col cols="12">
@@ -48,8 +48,7 @@
 
                 <v-spacer></v-spacer>
                 <div class="d-flex ga-2">
-                    <v-btn text="Delete" color="error" @@click="save" v-show="isEditing"></v-btn>
-                    <v-btn text="Save" @@click="save"></v-btn>
+                    <v-btn text="search" @@click="search"></v-btn>
                 </div>
             </v-card-actions>
         </v-card>
@@ -61,7 +60,10 @@
             const selected = ref([])
             const pages = ref([])
             const dialog = shallowRef(false)
-            const formModel = ref()
+            const formModel = ref({
+              name: '',
+              path: '',
+            })
             const isEditing = toRef(() => !!formModel.value.id)
             const headers = [
                 { title: 'الرقم', key: 'id', align: 'start' },
@@ -77,16 +79,7 @@
                   dialog.value = true
                 }
 
-                function edit () {
-                  const found = pages.value.find(i => i.id === selected.value[0])
-                  formModel.value = {
-                    id: found.id,
-                    name: found.name,
-                    path: found.path,
-                  }
-
-                  dialog.value = true
-                }
+                
                 async function remove () {
                     const response = await fetch('/home/deletePage/' + formModel.value.id, {
                       method: 'DELETE'
@@ -98,6 +91,18 @@
                       alert.value = true
                     }
                   }
+                  async function search() {
+                      const response = await fetch('/home/searchPage', {
+                        method: 'POST', // Specify the method
+                        headers: {
+                          'Content-Type': 'application/json', // Indicate the content type
+                        },
+                        body: JSON.stringify(formModel.value), // Convert the data to a JSON string
+                      })
+                      if (response.ok) {
+                        pages.value = await response.json()
+                      }
+                    }
                   async function addPage() {
                       const response = await fetch('/home/addPage', {
                         method: 'POST', // Specify the method
@@ -108,7 +113,7 @@
                       })
                       if (response.ok) {
                         pages.value = await response.json()
-                        showSnackbar('Added successfuly')
+                        msg('Added successfuly')
                         alert.value = true
                       }
                     }
@@ -140,7 +145,7 @@
               pages.value = await response.json()
           })
             return { pages, isEditing, selected, headers, formModel, add, save,
-              remove, edit, dialog, alert }
+              remove, dialog, alert, search }
           }
     </script>
 }

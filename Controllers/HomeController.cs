@@ -2,6 +2,7 @@ using System.Data;
 using System.Diagnostics;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.Sqlite;
 using school.Models;
 
@@ -87,6 +88,14 @@ public class HomeController : Controller
         await connection.ExecuteAsync(sql, pageInfo);
         sql = "SELECT id, name, path FROM pages order by id";
         var result = await connection.QueryAsync<PageInfo>(sql);
+        return Ok(result);
+    }
+     [HttpPost]
+    public async Task<IActionResult> SearchPage([FromBody] PageInfo pageInfo)
+    {
+        using var connection = CreateConnection();
+        var sql = "SELECT id, name, path FROM pages where name like @name order by id";
+        var result = await connection.QueryAsync<PageInfo>(sql, new { name = $"%{pageInfo.name}%" });
         return Ok(result);
     }
     [HttpPost]
