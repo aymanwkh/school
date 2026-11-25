@@ -75,13 +75,22 @@ const DisplayPageTitle = {
     search: {
       type: Boolean,
     },
+    loading: {
+      type: Boolean,
+    },
   },
+  emits: ['openSearch'],
   template: `
-    <v-toolbar :title="title"> 
+    <v-toolbar :title="title" class="mb-2"> 
       <template v-slot:append v-if="!!editLink || remove || others">
       <v-btn icon="mdi-dots-vertical" id="menu-btn"></v-btn>
     </template>
     <template v-slot:append v-if="!!addLink">
+    <v-btn icon="mdi-text-search-variant" @click="$emit('openSearch')" color="primary">
+      <template v-slot>
+        <v-icon size="24"></v-icon>
+      </template>
+    </v-btn>
       <v-btn icon="mdi-plus" :href="addLink" color="success">
         <template v-slot>
           <v-icon size="24"></v-icon>
@@ -89,7 +98,7 @@ const DisplayPageTitle = {
       </v-btn>
     </template>
     <template v-slot:append v-if="save">
-      <v-btn icon="mdi-content-save-outline" :href="addLink" color="success">
+      <v-btn icon="mdi-content-save-outline" color="success" type="submit" :loading="loading">
         <template v-slot>
           <v-icon size="30"></v-icon>
         </template>
@@ -132,11 +141,6 @@ const DisplayPageTitle = {
     </v-menu>
 
   `,
-  data() {
-    return {
-      menu: false,
-    }
-  },
 };
 
 app.component('display', Display);

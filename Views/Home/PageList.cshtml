@@ -1,184 +1,132 @@
 <v-container fluid>
-    <page-title title="قائمة الصفحات" add-link="/home/pageedit"></page-title>
-        <v-data-table :headers="headers" hide-default-footer :items="pages">
-            <template v-slot:top>
-                <v-toolbar flat title="Pages">
-                    <div class="d-flex ga-1 px-2">
-                        <v-icon-btn icon="mdi-text-search" size="32" variant="outlined" @@click="dialog = true" color="primary">
-                            <v-icon size="24"></v-icon>
-                        </v-icon-btn>
-                        <v-btn rounded="0" size="32" density="default" icon="mdi-text-search" variant="outlined" color="primary">
-                          <template v-slot>
-                            <v-icon size="24"></v-icon>
-                          </template>
-                        </v-btn>
-                        <v-btn rounded="0" size="32" density="default" icon="mdi-plus" variant="outlined" href="/home/pageedit" color="success"></v-btn>
-    <v-btn icon="mdi-dots-vertical" id="btn-menu">
-      <template v-slot>
-        <v-icon color="success" size="24"></v-icon>
+  <page-title title="قائمة الصفحات" add-link="/home/pageedit" search @@open-search="handleSearch"></page-title>
+  <v-data-table :headers="headers" hide-default-footer :items="pages">
+    <template v-slot:item.name="{ item }">
+      <v-chip :text="item.name" size="small" label :href="'/home/pageinfo/' + item.id"></v-chip>
+    </template>
+    <template v-slot:no-data>
+      <h6>لا يوجد بيانات</h6>
+    </template>
+  </v-data-table>
+  <v-dialog v-model="dialog" max-width="500">
+    <v-card title="search">
+      <template v-slot:text>
+        <v-row>
+          <v-col cols="12">
+            <v-text-field v-model="formModel.name" label="الاسم"></v-text-field>
+          </v-col>
+
+          <v-col cols="12">
+            <v-text-field v-model="formModel.path" label="المسار"></v-text-field>
+          </v-col>
+
+        </v-row>
       </template>
-    </v-btn>
-              <v-menu activator="#btn-menu" location="bottom end" offset="4">
-          <v-list
-            bg-color="surface-light"
-            class="d-flex flex-column ga-1 pa-1"
-            density="compact"
-            rounded="lg"
-            variant="text"
-            slim
-          >
-            <v-list-item
-              append-icon="mdi-pencil"
-              rounded="lg"
-              title="تعديل"
-            ></v-list-item>
 
-            <v-list-item
-              append-icon="mdi-trash-can-outline"
-              rounded="lg"
-              title="حذف"
-              link
-            ></v-list-item>
+      <v-divider></v-divider>
 
-            <v-list-item
-              append-icon="mdi-cog"
-              rounded="lg"
-              title="اخرى"
-              link
-            ></v-list-item>
-          </v-list>
-        </v-menu>
+      <v-card-actions class="bg-surface-light">
+        <v-btn text="Cancel" variant="plain" @@click="dialog = false"></v-btn>
 
-                        </div>
-                </v-toolbar>
-            </template>
-            <template v-slot:item.name="{ item }">
-                <v-chip
-                  :text="item.name"
-                  size="small"
-                  label
-                  :href="'/home/pageinfo/' + item.id"
-                ></v-chip>
-            </template>
-            <template v-slot:no-data>
-                <h6>لا يوجد بيانات</h6>
-            </template>
-        </v-data-table>
-    <v-dialog v-model="dialog" max-width="500">
-        <v-card title="search">
-            <template v-slot:text>
-                <v-row>
-                    <v-col cols="12">
-                        <v-text-field v-model="formModel.name" label="الاسم"></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12">
-                        <v-text-field v-model="formModel.path" label="المسار"></v-text-field>
-                    </v-col>
-
-                </v-row>
-            </template>
-
-            <v-divider></v-divider>
-
-            <v-card-actions class="bg-surface-light">
-                <v-btn text="Cancel" variant="plain" @@click="dialog = false"></v-btn>
-
-                <v-spacer></v-spacer>
-                <div class="d-flex ga-2">
-                    <v-btn text="search" @@click="search"></v-btn>
-                </div>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+        <v-spacer></v-spacer>
+        <div class="d-flex ga-2">
+          <v-btn text="search" @@click="search"></v-btn>
+        </div>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </v-container>
 @section Scripts {
-    <script>
-      const pages = ref([])
-      const dialog = shallowRef(false)
-      const menu = ref(false)
-      const formModel = ref({
-        name: '',
-        path: '',
+  <script>
+    const pages = ref([])
+    const dialog = shallowRef(false)
+    const formModel = ref({
+      name: '',
+      path: '',
+    })
+    function add() {
+      window.location.href = "/home/pageedit"
+    }
+    const headers = [
+      { title: 'الرقم', key: 'id', align: 'start' },
+      { title: 'الاسم', key: 'name', align: 'start' },
+      { title: 'المسار', key: 'path', align: 'start' },
+    ]
+    async function search() {
+      const response = await fetch('/home/searchPage', {
+        method: 'POST', // Specify the method
+        headers: {
+          'Content-Type': 'application/json', // Indicate the content type
+        },
+        body: JSON.stringify(formModel.value), // Convert the data to a JSON string
       })
-        function add () {
-        window.location.href = "/home/pageedit"
-          }
-      const headers = [
-          { title: 'الرقم', key: 'id', align: 'start' },
-          { title: 'الاسم', key: 'name', align: 'start' },
-          { title: 'المسار', key: 'path', align: 'start' },
-        ]
-        async function search() {
-              const response = await fetch('/home/searchPage', {
-                method: 'POST', // Specify the method
-                headers: {
-                  'Content-Type': 'application/json', // Indicate the content type
-                },
-                body: JSON.stringify(formModel.value), // Convert the data to a JSON string
-              })
-              if (response.ok) {
-                pages.value = await response.json()
-                dialog.value = false
-              }
-            }
-          
-                async function remove () {
-                    const response = await fetch('/home/deletePage/' + formModel.value.id, {
-                      method: 'DELETE'
-                    })
-                    if (response.ok) {
-                      pages.value = await response.json()
-                      dialog.value = false
-                      showSnackbar('Deleted successfully')
-                      alert.value = true
-                    }
-                  }
-                  async function addPage() {
-                      const response = await fetch('/home/addPage', {
-                        method: 'POST', // Specify the method
-                        headers: {
-                          'Content-Type': 'application/json', // Indicate the content type
-                        },
-                        body: JSON.stringify(formModel.value), // Convert the data to a JSON string
-                      })
-                      if (response.ok) {
-                        pages.value = await response.json()
-                        msg('Added successfuly')
-                        alert.value = true
-                      }
-                    }
-                    async function editPage() {
-                        const response = await fetch('/home/editPage', {
-                          method: 'POST', // Specify the method
-                          headers: {
-                            'Content-Type': 'application/json', // Indicate the content type
-                          },
-                          body: JSON.stringify(formModel.value), // Convert the data to a JSON string
-                        })
-                        if (response.ok) {
-                          pages.value = await response.json()
-                          showSnackbar('Editted successfuly')
-                          alert.value = true
-                        }
-                      }
-                  async function save () {
-                    if (isEditing.value) {
-                      await editPage()
-                    } else {
-                      await addPage()
-                    }
-                    dialog.value = false
-                  }
+      if (response.ok) {
+        pages.value = await response.json()
+        dialog.value = false
+      }
+    }
+    function handleSearch() {
+      console.log('search .....')
+      dialog.value = true
+    }
+    async function remove() {
+      const response = await fetch('/home/deletePage/' + formModel.value.id, {
+        method: 'DELETE'
+      })
+      if (response.ok) {
+        pages.value = await response.json()
+        dialog.value = false
+        showSnackbar('Deleted successfully')
+        alert.value = true
+      }
+    }
+    async function addPage() {
+      const response = await fetch('/home/addPage', {
+        method: 'POST', // Specify the method
+        headers: {
+          'Content-Type': 'application/json', // Indicate the content type
+        },
+        body: JSON.stringify(formModel.value), // Convert the data to a JSON string
+      })
+      if (response.ok) {
+        pages.value = await response.json()
+        msg('Added successfuly')
+        alert.value = true
+      }
+    }
+    async function editPage() {
+      const response = await fetch('/home/editPage', {
+        method: 'POST', // Specify the method
+        headers: {
+          'Content-Type': 'application/json', // Indicate the content type
+        },
+        body: JSON.stringify(formModel.value), // Convert the data to a JSON string
+      })
+      if (response.ok) {
+        pages.value = await response.json()
+        showSnackbar('Editted successfuly')
+        alert.value = true
+      }
+    }
+    async function save() {
+      if (isEditing.value) {
+        await editPage()
+      } else {
+        await addPage()
+      }
+      dialog.value = false
+    }
 
-          function main() {
+    function main() {
 
-          onMounted(async () => {
-              const response = await fetch('/home/getPages')
-              pages.value = await response.json()
-          })
-            return { pages, headers, formModel, add, save,
-              remove, dialog, search, menu }
-          }
-    </script>
+      onMounted(async () => {
+        const response = await fetch('/home/getPages')
+        pages.value = await response.json()
+      })
+      return {
+        pages, headers, formModel, add, save,
+        remove, dialog, search, handleSearch
+      }
+    }
+  </script>
 }

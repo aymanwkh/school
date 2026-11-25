@@ -1,5 +1,6 @@
 <v-container fluid>
-    <page-title title="معلومات صفحة" save></page-title>
+    <v-form @@submit.prevent="submit">
+    <page-title title="معلومات صفحة" save :loading="loading"></page-title>
     <v-row density="compact">
         <v-col cols="12">
           <v-text-field
@@ -7,7 +8,6 @@
             :counter="10"
             :rules="nameRules"
             label="الاسم"
-            required
           ></v-text-field>
         </v-col>
         <v-col cols="12">
@@ -15,27 +15,28 @@
             v-model="page.path"
             :rules="pathRules"
             label="المسار"
-            required
           ></v-text-field>
         </v-col>
     </v-row>
+    </v-form>
 </v-container>
 @section Scripts {
     <script>
         const fullPath = window.location.href
         const lastSlashIndex = fullPath.lastIndexOf('/')
         const id = fullPath.substring(lastSlashIndex + 1)
+        const loading = ref(false)
         const page = ref({
             id: 0,
             name: '',
             path: ''
         })
         const nameRules = [
-            @* value => {
+            value => {
             if (value) return true
 
             return 'Name is required.'
-            }, *@
+            },
             value => {
             if (value?.length <= 10) return true
 
@@ -49,14 +50,21 @@
             return 'Path is required.'
             },
         ]
+        async function submit(event) {
+            loading.value = true
+            const results = await event
+            if (!results.valid) loading.value = false
+        }
         function main() {
-
             onMounted(async () => {
-                if (typeof id !== 'number' || id == 0) return
+                console.log('id == ', id)
+                console.log('type == ', typeof id)
+                if (!Number.isFinite(id) || id == 0) return
+                console.log('id 123 == ', id)
                 const response = await fetch('/home/getPageInfo/' + id)
                 page.value = await response.json()
             })
-            return { page, nameRules, pathRules }
+            return { page, nameRules, pathRules, submit, loading }
         }
     </script>
 }
