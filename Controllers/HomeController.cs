@@ -117,11 +117,10 @@ public class HomeController : Controller
     public async Task<IActionResult> EditPage([FromBody] PageInfo pageInfo)
     {
         using var connection = CreateConnection();
-        var sql = "update pages set name = @name, path = @path where id = @id";
+        var sql = pageInfo.id == 0 ? "insert into pages (name, path) values (@name, @path)" : "update pages set name = @name, path = @path where id = @id";
         await connection.ExecuteAsync(sql, pageInfo);
-        sql = "SELECT id, name, path FROM pages order by id";
-        var result = await connection.QueryAsync<PageInfo>(sql);
-        return Ok(result);
+        TempData["message"] = "تم التخزين بنجاح";
+        return RedirectToAction("PageList");
     }
    [HttpDelete]
   public async Task<IActionResult> DeletePage(int id)
