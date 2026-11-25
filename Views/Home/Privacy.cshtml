@@ -1,8 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
-
+﻿
     <v-container fluid>
             <page-title title="Privacy"></page-title>
 <v-row>
@@ -42,11 +38,10 @@
     </v-dialog>
 
     </v-container>
-</div>
 @section Scripts {
 
     <script>
-        function pageSetup() {
+        function main() {
             const form = ref(null)
             const isFormValid = ref(false)
 

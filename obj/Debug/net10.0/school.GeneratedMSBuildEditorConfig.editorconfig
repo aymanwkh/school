@@ -35,6 +35,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleDEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/ayman/school/Views/Home/PageEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9QYWdlRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/ayman/school/Views/Home/PageInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9QYWdlSW5mby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/ayman/school/Views/Home/PageList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9QYWdlTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

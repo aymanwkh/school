@@ -1,4 +1,5 @@
-    <v-sheet border rounded>
+<v-container fluid>
+    <page-title title="قائمة الصفحات" add-link="/home/pageedit"></page-title>
         <v-data-table :headers="headers" hide-default-footer :items="pages">
             <template v-slot:top>
                 <v-toolbar flat title="Pages">
@@ -6,11 +7,49 @@
                         <v-icon-btn icon="mdi-text-search" size="32" variant="outlined" @@click="dialog = true" color="primary">
                             <v-icon size="24"></v-icon>
                         </v-icon-btn>
-                        <v-icon-btn icon="mdi-plus" size="32" variant="outlined" @@click="add" color="success">
+                        <v-btn rounded="0" size="32" density="default" icon="mdi-text-search" variant="outlined" color="primary">
+                          <template v-slot>
                             <v-icon size="24"></v-icon>
-                        </v-icon-btn>
+                          </template>
+                        </v-btn>
+                        <v-btn rounded="0" size="32" density="default" icon="mdi-plus" variant="outlined" href="/home/pageedit" color="success"></v-btn>
+    <v-btn icon="mdi-dots-vertical" id="btn-menu">
+      <template v-slot>
+        <v-icon color="success" size="24"></v-icon>
+      </template>
+    </v-btn>
+              <v-menu activator="#btn-menu" location="bottom end" offset="4">
+          <v-list
+            bg-color="surface-light"
+            class="d-flex flex-column ga-1 pa-1"
+            density="compact"
+            rounded="lg"
+            variant="text"
+            slim
+          >
+            <v-list-item
+              append-icon="mdi-pencil"
+              rounded="lg"
+              title="تعديل"
+            ></v-list-item>
 
-                    </div>
+            <v-list-item
+              append-icon="mdi-trash-can-outline"
+              rounded="lg"
+              title="حذف"
+              link
+            ></v-list-item>
+
+            <v-list-item
+              append-icon="mdi-cog"
+              rounded="lg"
+              title="اخرى"
+              link
+            ></v-list-item>
+          </v-list>
+        </v-menu>
+
+                        </div>
                 </v-toolbar>
             </template>
             <template v-slot:item.name="{ item }">
@@ -25,7 +64,6 @@
                 <h6>لا يوجد بيانات</h6>
             </template>
         </v-data-table>
-    </v-sheet>
     <v-dialog v-model="dialog" max-width="500">
         <v-card title="search">
             <template v-slot:text>
@@ -53,33 +91,38 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
+</v-container>
 @section Scripts {
     <script>
-          function pageSetup() {
-            const alert = ref(false)
-            const selected = ref([])
-            const pages = ref([])
-            const dialog = shallowRef(false)
-            const formModel = ref({
-              name: '',
-              path: '',
-            })
-            const isEditing = toRef(() => !!formModel.value.id)
-            const headers = [
-                { title: 'الرقم', key: 'id', align: 'start' },
-                { title: 'الاسم', key: 'name', align: 'start' },
-                { title: 'المسار', key: 'path', align: 'start' },
-              ]
-             function add () {
-              msg('hiiii')
-                  formModel.value = {
-                    name: '',
-                    path: '',
-                  }
-                  dialog.value = true
-                }
-
-                
+      const pages = ref([])
+      const dialog = shallowRef(false)
+      const menu = ref(false)
+      const formModel = ref({
+        name: '',
+        path: '',
+      })
+        function add () {
+        window.location.href = "/home/pageedit"
+          }
+      const headers = [
+          { title: 'الرقم', key: 'id', align: 'start' },
+          { title: 'الاسم', key: 'name', align: 'start' },
+          { title: 'المسار', key: 'path', align: 'start' },
+        ]
+        async function search() {
+              const response = await fetch('/home/searchPage', {
+                method: 'POST', // Specify the method
+                headers: {
+                  'Content-Type': 'application/json', // Indicate the content type
+                },
+                body: JSON.stringify(formModel.value), // Convert the data to a JSON string
+              })
+              if (response.ok) {
+                pages.value = await response.json()
+                dialog.value = false
+              }
+            }
+          
                 async function remove () {
                     const response = await fetch('/home/deletePage/' + formModel.value.id, {
                       method: 'DELETE'
@@ -91,18 +134,6 @@
                       alert.value = true
                     }
                   }
-                  async function search() {
-                      const response = await fetch('/home/searchPage', {
-                        method: 'POST', // Specify the method
-                        headers: {
-                          'Content-Type': 'application/json', // Indicate the content type
-                        },
-                        body: JSON.stringify(formModel.value), // Convert the data to a JSON string
-                      })
-                      if (response.ok) {
-                        pages.value = await response.json()
-                      }
-                    }
                   async function addPage() {
                       const response = await fetch('/home/addPage', {
                         method: 'POST', // Specify the method
@@ -140,12 +171,14 @@
                     dialog.value = false
                   }
 
+          function main() {
+
           onMounted(async () => {
               const response = await fetch('/home/getPages')
               pages.value = await response.json()
           })
-            return { pages, isEditing, selected, headers, formModel, add, save,
-              remove, dialog, alert, search }
+            return { pages, headers, formModel, add, save,
+              remove, dialog, search, menu }
           }
     </script>
 }

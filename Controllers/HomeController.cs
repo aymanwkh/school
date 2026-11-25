@@ -73,11 +73,26 @@ public class HomeController : Controller
     {
         return View();
     }
-    public async Task<IActionResult> GetPages()
+    public IActionResult PageInfo(int id)
+    {
+        return View();
+    }
+       public IActionResult PageEdit(int id)
+    {
+        return View();
+    }
+        public async Task<IActionResult> GetPages()
     {
         using var connection = CreateConnection();
         var sql = "SELECT id, name, path FROM pages order by id";
         var result = await connection.QueryAsync<PageInfo>(sql);
+        return Ok(result);
+    }
+        public async Task<IActionResult> GetPageInfo(int id)
+    {
+        using var connection = CreateConnection();
+        var sql = "SELECT id, name, path FROM pages where id = @id";
+        var result = await connection.QueryFirstOrDefaultAsync<PageInfo>(sql, new { id });
         return Ok(result);
     }
      [HttpPost]

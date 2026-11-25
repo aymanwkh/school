@@ -1,0 +1,27 @@
+<v-container fluid>
+    <page-title title="معلومات الصفحة" :edit-link="'/home/pageedit/' + id" remove></page-title>
+    <v-row density="compact">
+        <display label="الاسم" :value="page.name" long></display>
+        <display label="المسار" :value="page.path" long></display>
+    </v-row>
+</v-container>
+@section Scripts {
+    <script>
+        const fullPath = window.location.href
+        const lastSlashIndex = fullPath.lastIndexOf('/')
+        const id = fullPath.substring(lastSlashIndex + 1)
+        const page = ref({
+            id: 0,
+            name: '',
+            path: ''
+        })
+        function main() {
+
+            onMounted(async () => {
+                const response = await fetch('/home/getPageInfo/' + id)
+                page.value = await response.json()
+            })
+            return { page, id }
+        }
+    </script>
+}
