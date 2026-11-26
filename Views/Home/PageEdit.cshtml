@@ -62,12 +62,8 @@
                     body: JSON.stringify(page.value), // Convert the data to a JSON string
                 })
                 loading.value = false
-                console.log('response == ', response)
-                return
-                if (response.redirect) window.location.href = response.url
-                if (response.ok) {
-                    window.location.href = page.value.id == 0 ? '/home/pageList' : '/home/pageInfo/' + page.value.id 
-                }
+                console.log('resp == ', response)
+                if (response.redirected) window.location.href = response.url
             }
 
         }

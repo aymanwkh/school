@@ -38,6 +38,8 @@
 </v-container>
 @section Scripts {
   <script>
+    const message = @Json.Serialize(TempData["message"]);
+                console.log('message  =', message)
     const pages = ref([])
     const dialog = shallowRef(false)
     const formModel = ref({

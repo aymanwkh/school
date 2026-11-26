@@ -119,7 +119,8 @@ public class HomeController : Controller
         using var connection = CreateConnection();
         var sql = pageInfo.id == 0 ? "insert into pages (name, path) values (@name, @path)" : "update pages set name = @name, path = @path where id = @id";
         await connection.ExecuteAsync(sql, pageInfo);
-        TempData["message"] = "تم التخزين بنجاح";
+        ViewData["message"] = "تم التخزين بنجاح";
+        
         return RedirectToAction("PageList");
     }
    [HttpDelete]

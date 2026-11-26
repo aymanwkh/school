@@ -36,11 +36,12 @@
             </div>
         </nav>
     </header>
+            <input type="hidden" value="@TempData["message"]" id="flash-message"/>
+
     <div class="container" id="app">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-        <input type="hidden" value="@TempData["message"]" id="flash-message"/>
         <v-snackbar
                 v-model="snackbar.show"
                 :color="snackbar.color"

@@ -433,7 +433,6 @@ C:/dev/school/obj/Debug/net10.0/compressed/dedly5inln-{0}-3ja1wzrv07-3ja1wzrv07.
 /home/ayman/school/obj/Debug/net10.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
 /home/ayman/school/obj/Debug/net10.0/scopedcss/bundle/school.styles.css
 /home/ayman/school/obj/Debug/net10.0/scopedcss/projectbundle/school.bundle.scp.css
-/home/ayman/school/obj/Debug/net10.0/compressed/f1n7f2n9gl-{0}-b9sayid5wm-b9sayid5wm.gz
 /home/ayman/school/obj/Debug/net10.0/compressed/ji5ao1c2ur-{0}-61n19gt1b8-61n19gt1b8.gz
 /home/ayman/school/obj/Debug/net10.0/compressed/vm26c7xgv2-{0}-bqjiyaj88i-bqjiyaj88i.gz
 /home/ayman/school/obj/Debug/net10.0/compressed/ji4h3r6u8j-{0}-c2jlpeoesf-c2jlpeoesf.gz
@@ -507,5 +506,6 @@ C:/dev/school/obj/Debug/net10.0/compressed/dedly5inln-{0}-3ja1wzrv07-3ja1wzrv07.
 /home/ayman/school/obj/Debug/net10.0/school.pdb
 /home/ayman/school/obj/Debug/net10.0/school.genruntimeconfig.cache
 /home/ayman/school/obj/Debug/net10.0/ref/school.dll
-/home/ayman/school/obj/Debug/net10.0/compressed/dedly5inln-{0}-09387ula7t-09387ula7t.gz
-/home/ayman/school/obj/Debug/net10.0/compressed/x25oa3wx2f-{0}-czhsjxfemf-czhsjxfemf.gz
+/home/ayman/school/obj/Debug/net10.0/compressed/f1n7f2n9gl-{0}-tbkb52rkr2-tbkb52rkr2.gz
+/home/ayman/school/obj/Debug/net10.0/compressed/x25oa3wx2f-{0}-1dh9glfs2d-1dh9glfs2d.gz
+/home/ayman/school/obj/Debug/net10.0/compressed/dedly5inln-{0}-53sqd3chc8-53sqd3chc8.gz
